@@ -25,8 +25,14 @@ require(['vs/editor/editor.main'], function () {
         monaco.editor.createModel(data, 'typescript');          
       });
 
+    let starterCode = `console.log("Hello world!");
+    /* Uncomment the code below and click the 'Run' button above */
+    // let rootNode = hwv.model.getAbsoluteRootNode();
+    // let modelPath = 'models/microengine.scs';
+    // hwv.model.loadSubtreeFromScsFile(rootNode, modelPath);`
+    
   window.editor = monaco.editor.create(document.getElementById('editor'), {
-          value: 'console.log("Hello world!");', 
+          value: starterCode, 
           language: 'javascript',
           automaticLayout: true 
         });
