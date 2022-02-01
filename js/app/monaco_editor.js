@@ -25,12 +25,16 @@ require(['vs/editor/editor.main'], function () {
         monaco.editor.createModel(data, 'typescript');          
       });
 
-    let starterCode = `console.log("Hello world!");
+    var starterCode = `console.log("Hello world!");
     /* Uncomment the code below and click the 'Run' button above */
     // let rootNode = hwv.model.getAbsoluteRootNode();
     // let modelPath = 'models/microengine.scs';
     // hwv.model.loadSubtreeFromScsFile(rootNode, modelPath);`
-    
+
+    if(localStorage.getItem("userCode") != null){
+      starterCode = localStorage.getItem("userCode");
+    }
+
   window.editor = monaco.editor.create(document.getElementById('editor'), {
           value: starterCode, 
           language: 'javascript',
@@ -41,7 +45,8 @@ require(['vs/editor/editor.main'], function () {
 
 document.querySelector("#run-btn").addEventListener("click", function () {
     let stingOpening = "async function runCode(){\r\n"
-    let editorValue = editor.getValue(); 
+    var editorValue = editor.getValue(); 
+    editorValue = DOMPurify.sanitize(editorValue);
     let stingClosing = "\r\n} runCode()"
     let javascript = stingOpening.concat(editorValue, stingClosing);
     
@@ -68,4 +73,6 @@ document.querySelector("#run-btn").addEventListener("click", function () {
     previewWindow.open();
     previewWindow.write( window.$log);
     previewWindow.close();
+
+    localStorage.setItem("userCode", editorValue);
 });
