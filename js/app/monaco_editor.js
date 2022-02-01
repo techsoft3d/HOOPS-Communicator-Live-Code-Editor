@@ -27,14 +27,17 @@ require(['vs/editor/editor.main'], function () {
 
   window.editor = monaco.editor.create(document.getElementById('editor'), {
           value: 'console.log("Hello world!");', 
-          language: 'javascript'
+          language: 'javascript',
+          automaticLayout: true 
         });
 
 });
 
 document.querySelector("#run-btn").addEventListener("click", function () {
-    
-    let javascript = editor.getValue(); 
+    let stingOpening = "async function runCode(){\r\n"
+    let editorValue = editor.getValue(); 
+    let stingClosing = "\r\n} runCode()"
+    let javascript = stingOpening.concat(editorValue, stingClosing);
     
     let previewWindow = document.querySelector("#preview-window").contentWindow.document;
 

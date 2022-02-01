@@ -23,13 +23,11 @@ function createUILayout() {
                     {
                         type: 'column',
                         width: 40,
-                        height: 35,
                         content: [
                             {
                                 type: 'component',
                                 componentName: 'Editor',
                                 isClosable: false,
-                                height: 80,
                                 componentState: { label: 'C' }
                             },
                             {
@@ -66,7 +64,6 @@ function createUILayout() {
         $(container.getElement()).append($("#editorwindow"));
     });
 
-    
     myLayout.registerComponent('Console', function (container, componentState) {
         $(container.getElement()).append($("#consolewindow"));
     });
@@ -74,6 +71,7 @@ function createUILayout() {
     myLayout.on('stateChanged', function () {
         if (hwv != null) {
             hwv.resizeCanvas();
+            editor.layout();
         }
     });
     myLayout.init();
