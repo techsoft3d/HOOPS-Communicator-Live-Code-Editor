@@ -1,4 +1,5 @@
 ## HOOPS Communicator Live Code Editor
+See this demo running live on [GitHub Pages](https://techsoft3d.github.io/HOOPS-Communicator-Live-Code-Editor/index.html). 
 
 ## In order to run locally
 
