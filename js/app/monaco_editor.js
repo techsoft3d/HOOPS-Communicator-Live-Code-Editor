@@ -46,7 +46,7 @@ require(['vs/editor/editor.main'], function () {
 document.querySelector("#run-btn").addEventListener("click", function () {
     let stingOpening = "async function runCode(){\r\n"
     var editorValue = editor.getValue(); 
-    editorValue = DOMPurify.sanitize(editorValue);
+    // editorValue = DOMPurify.sanitize(editorValue);
     let stingClosing = "\r\n} runCode()"
     let javascript = stingOpening.concat(editorValue, stingClosing);
     

@@ -79,20 +79,17 @@ function createUILayout() {
     updateEditorLayout();
 
     var viewermenu = [{
-        name: 'Dummy Menu Item',
+        name: 'Getting Started Example',
         fun: function () {
-         
+            window.editor.setValue(`console.log("Hello world!");\n    /* Uncomment the code below and click the 'Run' button above */\n    // let rootNode = hwv.model.getAbsoluteRootNode();\n    // let modelPath = 'models/microengine.scs';\n    // hwv.model.loadSubtreeFromScsFile(rootNode, modelPath);`)
+
         }
     }, 
     {
-        name: 'Dummy Submenu',
-        subMenu: [
-            {
-                name: 'Dummy Item',
-                fun: function () {
-                }
-            }
-        ]
+        name: 'Change Model Color',
+        fun: function () {
+            window.editor.setValue('await hwv.model.loadSubtreeFromScsFile(hwv.model.getAbsoluteRootNode(), "models/microengine.scs")\r\nfor (var i=0;i<10;i++)\r\n{\r\n    hwv.model.setNodesFaceColor([hwv.model.getRootNode()], new Communicator.Color(225,0,0))\r\n}')
+        }
     }
 
     ];
