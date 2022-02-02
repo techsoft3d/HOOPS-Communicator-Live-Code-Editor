@@ -71,12 +71,12 @@ function createUILayout() {
     myLayout.on('stateChanged', function () {
         if (hwv != null) {
             hwv.resizeCanvas();
-            editor.layout();
+            updateEditorLayout();
         }
     });
     myLayout.init();
 
-
+    updateEditorLayout();
 
     var viewermenu = [{
         name: 'Dummy Menu Item',
@@ -104,4 +104,12 @@ function createUILayout() {
 
 
 
+}
+
+
+function updateEditorLayout()
+{
+    var newheight = $("#editorwindow").height() - $("#runbuttondiv").height();
+    $("#editor").css({ "height": newheight + "px" });
+    editor.layout();
 }
