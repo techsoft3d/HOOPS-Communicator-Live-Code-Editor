@@ -1,4 +1,5 @@
 var myLayout;
+var hwvReady = false;
 
 
 
@@ -7,7 +8,7 @@ function startup()
     createUILayout();
 }
 
-function createUILayout() {
+async function createUILayout() {
 
     var config = {
         settings: {
@@ -69,14 +70,12 @@ function createUILayout() {
     });
 
     myLayout.on('stateChanged', function () {
-        if (hwv != null) {
+        if (hwvReady) {
             hwv.resizeCanvas();
-            updateEditorLayout();
         }
+        updateEditorLayout();
     });
     myLayout.init();
-
-    updateEditorLayout();
 
     var viewermenu = [{
         name: 'Getting Started Example',
@@ -99,7 +98,7 @@ function createUILayout() {
         'containment': '#viewerContainer'
     });
 
-
+    await startMonaco();   
 
 }
 
@@ -108,5 +107,6 @@ function updateEditorLayout()
 {
     var newheight = $("#editorwindow").height() - $("#runbuttondiv").height();
     $("#editor").css({ "height": newheight + "px" });
-    editor.layout();
+    if (editor.layout)
+        editor.layout();
 }

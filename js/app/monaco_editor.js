@@ -16,14 +16,14 @@ window.addEventListener("unhandledrejection", function(promiseRejectionEvent) {
 //extracting typescript from HOOPS API Files
 require.config({ paths: { vs: 'js/monaco-editor/min/vs' } });
 
-require(['vs/editor/editor.main'], function () {
-    fetch('typescript/hoops_web_viewer.d.ts')
-      .then(response => response.text())
-      .then(data => {
-        var libUri = 'ts:filename/hoops_web_viewer.d.ts';
-        monaco.languages.typescript.javascriptDefaults.addExtraLib(data, libUri);
-        monaco.editor.createModel(data, 'typescript');          
-      });
+async function startMonaco() {
+
+  require(['vs/editor/editor.main'], async function () {
+    let response = await fetch('typescript/hoops_web_viewer.d.ts');
+    let data = await response.text();
+    var libUri = 'ts:filename/hoops_web_viewer.d.ts';
+    await monaco.languages.typescript.javascriptDefaults.addExtraLib(data, libUri);
+    await monaco.editor.createModel(data, 'typescript');
 
     var starterCode = `console.log("Hello world!");
     /* Uncomment the code below and click the 'Run' button above */
@@ -31,49 +31,53 @@ require(['vs/editor/editor.main'], function () {
     // let modelPath = 'models/microengine.scs';
     // hwv.model.loadSubtreeFromScsFile(rootNode, modelPath);`
 
-    if(localStorage.getItem("userCode") != null){
-      starterCode = localStorage.getItem("userCode");
+    if (localStorage.getItem("userCode") != null) {
+      starterCode = await localStorage.getItem("userCode");
     }
 
-  window.editor = monaco.editor.create(document.getElementById('editor'), {
-          value: starterCode, 
-          language: 'javascript',
-          automaticLayout: true 
-        });
+    window.editor = await monaco.editor.create(document.getElementById('editor'), {
+      value: starterCode,
+      language: 'javascript',
+      automaticLayout: true
+    });
 
 
-        editor.addAction({
-          // An unique identifier of the contributed action.
-          id: 'my-unique-id',
-        
-          // A label of the action that will be presented to the user.
-          label: 'Insert Selection Array',
-        
-              
-          contextMenuGroupId: 'customGroup',
-        
-          contextMenuOrder: 0,
-        
-          // Method that will be executed when the action is triggered.
-          // @param editor The editor instance is passed in as a convenience
-          run: function (ed) {
-            var arraytext = "let selectionarray = [";
-            var sels = hwv.selectionManager.getResults();
-    
-            for (var i = 0; i < sels.length; i++) {
-                arraytext += sels[i].getNodeId();
-                if (i < sels.length - 1) {
-                    arraytext += ", ";
-                }
-            }
-            arraytext += "];";
-            insertTextIntoEditor(arraytext);
+    editor.addAction({
+      // An unique identifier of the contributed action.
+      id: 'my-unique-id',
 
+      // A label of the action that will be presented to the user.
+      label: 'Insert Selection Array',
+
+
+      contextMenuGroupId: 'customGroup',
+
+      contextMenuOrder: 0,
+
+      // Method that will be executed when the action is triggered.
+      // @param editor The editor instance is passed in as a convenience
+      run: function (ed) {
+        var arraytext = "let selectionarray = [";
+        var sels = hwv.selectionManager.getResults();
+
+        for (var i = 0; i < sels.length; i++) {
+          arraytext += sels[i].getNodeId();
+          if (i < sels.length - 1) {
+            arraytext += ", ";
           }
-        });
-        
+        }
+        arraytext += "];";
+        insertTextIntoEditor(arraytext);
 
-});
+      }
+    });
+
+
+  });
+}
+
+
+window.startMonaco = startMonaco;
 
 document.querySelector("#run-btn").addEventListener("click", async function () {
     let stingOpening = "async function runCode(){\r\n";

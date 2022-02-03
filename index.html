@@ -88,6 +88,10 @@
 
             ui = new Communicator.Ui.Desktop.DesktopUi(hwv, uiConfig);
 
+               hwv.setCallbacks({
+                    modelStructureReady: function() {hwvReady = true},
+                });
+
             hwv.start();
          
           },
