@@ -17,7 +17,7 @@ window.addEventListener("unhandledrejection", function(promiseRejectionEvent) {
 require.config({ paths: { vs: 'js/monaco-editor/min/vs' } });
 
 async function startMonaco() {
-
+  return new Promise((resolve, reject) => {
   require(['vs/editor/editor.main'], async function () {
     let response = await fetch('typescript/hoops_web_viewer.d.ts');
     let data = await response.text();
@@ -95,9 +95,8 @@ async function startMonaco() {
 
       }
     });
-
-
-
+    resolve();
+  });
   });
 }
 
