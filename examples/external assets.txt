@@ -1,4 +1,31 @@
-//It is possible to load external assets from a public server using the approach below
+//It is possible to load external assets including scs files and JS libraries
+//from a public server using the approaches below. 
+//Make sure the server you are loading the asset from has CORS enabled
 //This also includes external libraries
 
-hwv.model.loadSubtreeFromScsFile(hwv.model.getRootNode(),"https://shattereddemo.s3.us-west-2.amazonaws.com/boeingcockpit.scs");
+
+var url = "https://shattereddemo.s3.us-west-2.amazonaws.com/PartialExplode.js";
+var s = document.createElement("script");
+s.type = "text/javascript";
+s.src = url;
+document.head.appendChild(s);
+
+ s.onload = async function() {
+        //any code calling on loaded file code
+    
+
+await hwv.model.loadSubtreeFromScsFile(hwv.model.getRootNode(),
+"https://shattereddemo.s3.us-west-2.amazonaws.com/arboleda.scs");
+
+//await hwv.model.loadSubtreeFromScsFile(hwv.model.getRootNode(),"models/microengine.scs");
+
+    var myPartialExplode = new PartialExplode(hwv);
+    
+    await myPartialExplode.initialize([5]);
+    hwv.view.isolateNodes([2]);
+    setTimeout(function () {
+        myPartialExplode.explode(2);
+    }, 50);
+
+}
+
