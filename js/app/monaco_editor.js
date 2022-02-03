@@ -6,11 +6,7 @@ console.log = function(value)
 };
 
 window.addEventListener("unhandledrejection", function(promiseRejectionEvent) {
-    console.log(promiseRejectionEvent.reason.message)
-    let previewWindow = document.querySelector("#preview-window").contentWindow.document;
-    previewWindow.open();
-    previewWindow.write( window.$log);
-    previewWindow.close();
+    console.log(promiseRejectionEvent.reason.message);
 });
 
 //extracting typescript from HOOPS API Files
@@ -105,13 +101,13 @@ window.startMonaco = startMonaco;
 
 document.querySelector("#run-btn").addEventListener("click", async function () {
     $("#userdiv").empty();
+    $("#preview-window").empty();
     let stingOpening = "async function runCode(){\r\n";
     var editorValue = editor.getValue(); 
     // editorValue = DOMPurify.sanitize(editorValue);
     let stingClosing = "\r\n} runCode()"
     let javascript = stingOpening.concat(editorValue, stingClosing);
     
-    let previewWindow = document.querySelector("#preview-window").contentWindow.document;
 
     if (document.getElementById("reload_environment").checked == true){
         await hwv.model.clear();
@@ -130,14 +126,19 @@ document.querySelector("#run-btn").addEventListener("click", async function () {
         myFunc();
         
     }
-    
-    previewWindow.open();
-    previewWindow.write( window.$log);
-    previewWindow.close();
 
     localStorage.setItem("userCode", editorValue);
 });
 
+(function () {
+  var oldLog = console.log;
+  console.log = function (message) {
+    if (message != "") {
+      $("#preview-window").append(message + "<br>");
+    }
+    oldLog.apply(console, arguments);
+  };
+})();
 
 function insertTextIntoEditor(text) {
   var selection = editor.getSelection();
