@@ -1,0 +1,7 @@
+await hwv.model.loadSubtreeFromScsFile(hwv.model.getAbsoluteRootNode(), "models/microengine.scs")
+
+let selectionarray = [20, 95, 28];
+for (var i=0;i<selectionarray.length;i++)
+{
+    hwv.model.setNodesFaceColor(selectionarray, new Communicator.Color(225,0,0))
+}
