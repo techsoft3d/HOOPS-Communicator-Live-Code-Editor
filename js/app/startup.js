@@ -105,7 +105,7 @@ async function createUILayout() {
 
 function updateEditorLayout()
 {
-    var newheight = $("#editorwindow").height() - $("#runbuttondiv").height();
+    var newheight = $("#editorwindow").height() - $("#runbuttondiv").height()-2;
     $("#editor").css({ "height": newheight + "px" });
     if (editor.layout)
         editor.layout();

@@ -104,6 +104,7 @@ async function startMonaco() {
 window.startMonaco = startMonaco;
 
 document.querySelector("#run-btn").addEventListener("click", async function () {
+    $("#userdiv").empty();
     let stingOpening = "async function runCode(){\r\n";
     var editorValue = editor.getValue(); 
     // editorValue = DOMPurify.sanitize(editorValue);
