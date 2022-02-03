@@ -1,0 +1,4 @@
+//It is possible to load external assets from a public server using the approach below
+//This also includes external libraries
+
+hwv.model.loadSubtreeFromScsFile(hwv.model.getRootNode(),"https://shattereddemo.s3.us-west-2.amazonaws.com/boeingcockpit.scs");

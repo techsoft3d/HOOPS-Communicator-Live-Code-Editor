@@ -101,6 +101,14 @@ async function createUILayout() {
             let text = await res.text();
             window.editor.setValue(text);        
         }
+    },
+    {
+        name: 'Loading External Assets',
+        fun: async function () {
+            var res = await fetch('examples/external assets.txt');
+            let text = await res.text();
+            window.editor.setValue(text);        
+        }
     }
 
 
