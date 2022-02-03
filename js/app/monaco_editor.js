@@ -41,6 +41,38 @@ require(['vs/editor/editor.main'], function () {
           automaticLayout: true 
         });
 
+
+        editor.addAction({
+          // An unique identifier of the contributed action.
+          id: 'my-unique-id',
+        
+          // A label of the action that will be presented to the user.
+          label: 'Insert Selection Array',
+        
+              
+          contextMenuGroupId: 'customGroup',
+        
+          contextMenuOrder: 0,
+        
+          // Method that will be executed when the action is triggered.
+          // @param editor The editor instance is passed in as a convenience
+          run: function (ed) {
+            var arraytext = "let selectionarray = [";
+            var sels = hwv.selectionManager.getResults();
+    
+            for (var i = 0; i < sels.length; i++) {
+                arraytext += sels[i].getNodeId();
+                if (i < sels.length - 1) {
+                    arraytext += ", ";
+                }
+            }
+            arraytext += "];";
+            insertTextIntoEditor(arraytext);
+
+          }
+        });
+        
+
 });
 
 document.querySelector("#run-btn").addEventListener("click", async function () {
@@ -76,3 +108,11 @@ document.querySelector("#run-btn").addEventListener("click", async function () {
 
     localStorage.setItem("userCode", editorValue);
 });
+
+
+function insertTextIntoEditor(text) {
+  var selection = editor.getSelection();
+  var id = { major: 1, minor: 1 };
+  var op = { identifier: id, range: selection, text: text, forceMoveMarkers: true };
+  editor.executeEdits("my-source", [op]);
+}
