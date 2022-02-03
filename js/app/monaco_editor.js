@@ -43,8 +43,8 @@ require(['vs/editor/editor.main'], function () {
 
 });
 
-document.querySelector("#run-btn").addEventListener("click", function () {
-    let stingOpening = "async function runCode(){\r\n"
+document.querySelector("#run-btn").addEventListener("click", async function () {
+    let stingOpening = "async function runCode(){\r\n";
     var editorValue = editor.getValue(); 
     // editorValue = DOMPurify.sanitize(editorValue);
     let stingClosing = "\r\n} runCode()"
@@ -53,7 +53,7 @@ document.querySelector("#run-btn").addEventListener("click", function () {
     let previewWindow = document.querySelector("#preview-window").contentWindow.document;
 
     if (document.getElementById("reload_environment").checked == true){
-        hwv.model.clear()
+        await hwv.model.clear();
     };        
 
     var myFunc = new Function(`console.log("")`); //function called initially just to clear the window.
