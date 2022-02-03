@@ -100,7 +100,7 @@ async function startMonaco() {
 window.startMonaco = startMonaco;
 
 document.querySelector("#run-btn").addEventListener("click", async function () {
-    $("#userdiv").empty();
+  
     $("#preview-window").empty();
     let stingOpening = "async function runCode(){\r\n";
     var editorValue = editor.getValue(); 
@@ -110,7 +110,8 @@ document.querySelector("#run-btn").addEventListener("click", async function () {
 
     if (document.getElementById("reload_environment").checked == true){
         await hwv.model.clear();
-    };        
+        $("#userdiv").empty();
+    }        
 
     var myFunc = new Function(`console.log("")`); //function called initially just to clear the window.
     myFunc();
