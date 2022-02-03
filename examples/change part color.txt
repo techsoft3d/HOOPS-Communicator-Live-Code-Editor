@@ -1,7 +1,7 @@
 await hwv.model.loadSubtreeFromScsFile(hwv.model.getAbsoluteRootNode(), "models/microengine.scs")
 
 //The nodeids of the current selection as well as the current camera
-// can be inserted via the right-click menu.
+//can be inserted via the right-click menu.
 let selectionarray = [20, 95, 28];
 for (var i=0;i<selectionarray.length;i++)
 {

@@ -1,6 +1,6 @@
 //It is possible to load external assets including scs files and JS libraries
 //from a public server using the approaches below. 
-//Make sure the server you are loading the asset from has CORS enabled
+//Make sure the server you are loading the asset from has CORS enabled.
 
 var url = "https://shattereddemo.s3.us-west-2.amazonaws.com/PartialExplode.js";
 var s = document.createElement("script");
@@ -8,15 +8,13 @@ s.type = "text/javascript";
 s.src = url;
 document.head.appendChild(s);
 
- s.onload = async function() {
-        //any code calling on loaded file code
-    
+s.onload = async function () {
 
-await hwv.model.loadSubtreeFromScsFile(hwv.model.getRootNode(),
-"https://shattereddemo.s3.us-west-2.amazonaws.com/arboleda.scs");
+    await hwv.model.loadSubtreeFromScsFile(hwv.model.getRootNode(),
+        "https://shattereddemo.s3.us-west-2.amazonaws.com/arboleda.scs");
 
     var myPartialExplode = new PartialExplode(hwv);
-    
+
     await myPartialExplode.initialize([5]);
     hwv.view.isolateNodes([2]);
     setTimeout(function () {
