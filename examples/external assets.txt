@@ -18,8 +18,7 @@ s.onload = async function () {
     await myPartialExplode.initialize([5]);
     hwv.view.isolateNodes([2]);
     setTimeout(function () {
-        myPartialExplode.explode(2);
-        hwv.view.isolateNodes([2]);
+        myPartialExplode.explode(2);      
     }, 50);
 
 }
