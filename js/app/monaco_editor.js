@@ -44,7 +44,7 @@ async function startMonaco() {
 
     editor.addAction({
       // An unique identifier of the contributed action.
-      id: 'my-unique-id',
+      id: 'addSelectionArrayMonacoAction',
 
       // A label of the action that will be presented to the user.
       label: 'Insert Selection Array',
@@ -71,6 +71,31 @@ async function startMonaco() {
 
       }
     });
+
+    editor.addAction({
+      // An unique identifier of the contributed action.
+      id: 'setCameraMonacoAction',
+
+      // A label of the action that will be presented to the user.
+      label: 'Set Camera',
+
+
+      contextMenuGroupId: 'customGroup',
+
+      contextMenuOrder: 0,
+
+      // Method that will be executed when the action is triggered.
+      // @param editor The editor instance is passed in as a convenience
+      run: function (ed) {
+        var cam = hwv.view.getCamera();
+
+        let text = 'let cam = Communicator.Camera.fromJson(JSON.parse(\'' + JSON.stringify(cam.toJson()) + '\'));\n';      
+        text += "hwv.view.setCamera(cam);";
+        insertTextIntoEditor(text);
+
+      }
+    });
+
 
 
   });
