@@ -107,7 +107,6 @@ document.querySelector("#run-btn").addEventListener("click", async function () {
     $("#userdiv").empty();
     let stingOpening = "async function runCode(){\r\n";
     var editorValue = editor.getValue(); 
-    // editorValue = DOMPurify.sanitize(editorValue);
     let stingClosing = "\r\n} runCode()"
     let javascript = stingOpening.concat(editorValue, stingClosing);
     
