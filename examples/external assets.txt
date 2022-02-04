@@ -10,13 +10,13 @@ document.head.appendChild(s);
 
 s.onload = async function () {
 
-    await hwv.model.loadSubtreeFromScsFile(hwv.model.getRootNode(),
-        "https://shattereddemo.s3.us-west-2.amazonaws.com/arboleda.scs");
+   await hwv.model.loadSubtreeFromScsFile(hwv.model.getRootNode(),
+   "https://shattereddemo.s3.us-west-2.amazonaws.com/livecode/88f92308-bda9-4035-bdf2-7e57f4df7944/rac_advanced_sample_project.scs");
+
 
     var myPartialExplode = new PartialExplode(hwv);
 
-    await myPartialExplode.initialize([5]);
-    hwv.view.isolateNodes([2]);
+    await myPartialExplode.initialize([2]);
     setTimeout(function () {
         myPartialExplode.explode(2);      
     }, 50);

@@ -109,6 +109,14 @@ async function createUILayout() {
             let text = await res.text();
             window.editor.setValue(text);        
         }
+    },
+    {
+        name: 'Available Models',
+        fun: async function () {
+            var res = await fetch('examples/available models.txt');
+            let text = await res.text();
+            window.editor.setValue(text);        
+        }
     }
 
 
