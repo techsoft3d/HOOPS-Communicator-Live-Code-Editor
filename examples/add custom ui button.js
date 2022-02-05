@@ -1,17 +1,14 @@
-//It is possible to add custom ui elements like buttons to the viewer
-//which should be defined inside the "userdiv" DOM element.
+//It is possible to add custom ui elements like buttons and CSS styles
+//to the viewer by specifying them in the HTML and CSS tab.
 //All custom UI elements will be cleared out when the viewer is reloaded.
 //Make sure to add any custom functions (see below) to the window object
-//to make them accessible to the UI element.
+//to make them accessible to the UI elements.
 
 function testFunction()
 {
     hwv.view.fitWorld();
 }
 window.testFunction = testFunction;
-
-let button='<input type="button" onclick="testFunction()" "id="viewermenu1button" value="Fit World" style="left:50px; position:absolute;z-index:1">';
-$("#userdiv").append(button);
 
 let rootNode = hwv.model.getAbsoluteRootNode();
 let modelPath = 'models/microengine.scs';

@@ -21,19 +21,35 @@ async function startMonaco() {
     await monaco.languages.typescript.javascriptDefaults.addExtraLib(data, libUri);
     await monaco.editor.createModel(data, 'typescript');
 
-    var starterCode = `console.log("Hello world!");
+    let starterCode = {js:"",html:"",css:""};
+    starterCode.js = `console.log("Hello world!");
     /* Uncomment the code below and click the 'Run' button above */
     // let rootNode = hwv.model.getAbsoluteRootNode();
     // let modelPath = 'models/microengine.scs';
     // hwv.model.loadSubtreeFromScsFile(rootNode, modelPath);`
 
     if (localStorage.getItem("userCode") != null) {
-      starterCode = await localStorage.getItem("userCode");
+      try {
+        starterCode = JSON.parse(localStorage.getItem("userCode"));
+      } catch (e) {
+      }
     }
 
     window.editor = await monaco.editor.create(document.getElementById('editor'), {
-      value: starterCode,
+      value: starterCode.js,
       language: 'javascript',
+      automaticLayout: true
+    });
+
+    window.htmleditor = await monaco.editor.create(document.getElementById('htmleditor'), {
+      value: starterCode.html,
+      language: 'html',
+      automaticLayout: true
+    });
+
+    window.csseditor = await monaco.editor.create(document.getElementById('csseditor'), {
+      value: starterCode.css,
+      language: 'css',
       automaticLayout: true
     });
 
@@ -113,6 +129,10 @@ document.querySelector("#run-btn").addEventListener("click", async function () {
         $("#userdiv").empty();
     }        
 
+    $("#userdiv").append(htmleditor.getValue());
+
+    $("<style type='text/css'>" + csseditor.getValue() + "</style>").appendTo("#userdiv");
+
     var myFunc = new Function(`console.log("")`); //function called initially just to clear the window.
     myFunc();
 
@@ -126,8 +146,9 @@ document.querySelector("#run-btn").addEventListener("click", async function () {
         myFunc();
         
     }
+    let editorValues = {js:editor.getValue(), html:htmleditor.getValue(), css:csseditor.getValue()};
 
-    localStorage.setItem("userCode", editorValue);
+    localStorage.setItem("userCode", JSON.stringify(editorValues));
 });
 
 (function () {

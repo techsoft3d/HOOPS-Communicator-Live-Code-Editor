@@ -26,11 +26,25 @@ async function createUILayout() {
                         width: 40,
                         content: [
                             {
+                                type:'stack',
+                            content: [{
                                 type: 'component',
                                 componentName: 'Editor',
                                 isClosable: false,
                                 componentState: { label: 'C' }
+                            },{
+                                type: 'component',
+                                componentName: 'HTML',
+                                isClosable: false,
+                                componentState: { label: 'C' }
                             },
+                            {
+                                type: 'component',
+                                componentName: 'CSS',
+                                isClosable: false,
+                                componentState: { label: 'C' }
+                            }
+                        ]},
                             {
                                 type: 'component',
                                 componentName: 'Console',
@@ -65,6 +79,15 @@ async function createUILayout() {
         $(container.getElement()).append($("#editorwindow"));
     });
 
+    myLayout.registerComponent('HTML', function (container, componentState) {
+        $(container.getElement()).append($("#htmleditorwindow"));
+    });
+
+    myLayout.registerComponent('CSS', function (container, componentState) {
+        $(container.getElement()).append($("#csseditorwindow"));
+    });
+
+
     myLayout.registerComponent('Console', function (container, componentState) {
         $(container.getElement()).append($("#consolewindow"));
     });
@@ -80,42 +103,32 @@ async function createUILayout() {
     var viewermenu = [{
         name: 'Getting Started Example',
         fun: async function () {
-            var res = await fetch('examples/getting started.txt');
-            let text = await res.text();
-            window.editor.setValue(text);
+            fetchExample('getting started');
 
         }
     }, 
     {
         name: 'Change Part Color',
         fun: async function () {
-            var res = await fetch('examples/change part color.txt');
-            let text = await res.text();
-            window.editor.setValue(text);        
+            fetchExample('change part color');
         }
     },
     {
         name: 'Add Custom UI Button',
         fun: async function () {
-            var res = await fetch('examples/add custom ui button.txt');
-            let text = await res.text();
-            window.editor.setValue(text);        
+            fetchExample('add custom ui button');
         }
     },
     {
         name: 'Loading External Assets',
         fun: async function () {
-            var res = await fetch('examples/external assets.txt');
-            let text = await res.text();
-            window.editor.setValue(text);        
+            fetchExample('external assets');
         }
     },
     {
         name: 'Available Models',
         fun: async function () {
-            var res = await fetch('examples/available models.txt');
-            let text = await res.text();
-            window.editor.setValue(text);        
+            fetchExample('available models');
         }
     }
 
@@ -131,11 +144,42 @@ async function createUILayout() {
 
 }
 
+async function fetchExample(name) {
+    let res;
+    let text;
+    window.htmleditor.setValue("");
+    window.csseditor.setValue("");
+    
+    res = await fetch('examples/' + name + '.js');
+    if (res.ok) {
+        text = await res.text();
+        window.editor.setValue(text);    
+    }
 
-function updateEditorLayout()
-{
-    var newheight = $("#editorwindow").height() - $("#runbuttondiv").height()-2;
+    res = await fetch('examples/' + name + '.html');
+    if (res.ok) {
+        text = await res.text();
+        window.htmleditor.setValue(text);    
+    }
+
+    res = await fetch('examples/' + name + '.css');
+    if (res.ok) {
+        text = await res.text();
+        window.csseditor.setValue(text);    
+    }
+
+
+}
+
+
+function updateEditorLayout() {
+    var newheight = $("#editorwindow").height() - $("#runbuttondiv").height() - 2;
     $("#editor").css({ "height": newheight + "px" });
     if (editor.layout)
         editor.layout();
+    if (htmleditor.layout)
+        htmleditor.layout();
+
+    if (csseditor.layout)
+        csseditor.layout();
 }
