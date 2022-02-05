@@ -25,7 +25,7 @@ async function startup()
                                 type:'stack',
                             content: [{
                                 type: 'component',
-                                componentName: 'Editor',
+                                componentName: 'JS',
                                 isClosable: false,
                                 componentState: { label: 'C' }
                             },{
@@ -71,7 +71,7 @@ async function startup()
         $(container.getElement()).append($("#content"));
     });
 
-    myLayout.registerComponent('Editor', function (container, componentState) {
+    myLayout.registerComponent('JS', function (container, componentState) {
         $(container.getElement()).append($("#editorwindow"));
     });
 
