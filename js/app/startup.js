@@ -3,12 +3,8 @@ var hwvReady = false;
 
 
 
-function startup()
+async function startup()
 {
-    createUILayout();
-}
-
-async function createUILayout() {
 
     var config = {
         settings: {
