@@ -112,6 +112,7 @@ async function startup()
                         {
                             type: 'row',
                             content: [{
+                                title: "HOOPS Communicator 2022 Viewer",
                                 type: 'component',
                                 componentName: 'Viewer',
                                 isClosable: false,
