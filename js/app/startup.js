@@ -168,6 +168,14 @@ async function fetchExample(name) {
 }
 
 
+
+function clearEditor()
+{
+    editor.setValue("");
+    htmleditor.setValue("");
+    csseditor.setValue("");
+}
+
 function updateEditorLayout() {
     var newheight = $("#editorwindow").height() - $("#runbuttondiv").height() - 2;
     $("#editor").css({ "height": newheight + "px" });
