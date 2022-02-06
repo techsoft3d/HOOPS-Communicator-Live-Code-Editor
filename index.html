@@ -61,8 +61,8 @@
       var ui = null;
       var md = new MobileDetect(window.navigator.userAgent);
 
-      window.onload = function () {
-        startup();
+      window.onload = async function () {
+        await startup();
         Sample.createViewer().then(
           function (viewer) {
             hwv = viewer;
@@ -88,7 +88,7 @@
             ui = new Communicator.Ui.Desktop.DesktopUi(hwv, uiConfig);
 
                hwv.setCallbacks({
-                    modelStructureReady: function() {hwvReady = true},
+                modelStructureReady: function() {hwvReady = true; handleAutorun()},
                 });
 
             hwv.start();
@@ -1197,31 +1197,31 @@
       </div>
     </div>
 
-        <div id="editorwindow" style="height:100%;">
+        <div id="editorwindow" style="height:100%;display:none">
           <div id="runbuttondiv" style="height:24px;width:100%;position:absolute">
             <button id="run-btn" type="button";>Run</button>
             <button onclick="clearEditor()" id="save" type="button";>Clear</button>
             <input type="button" id="viewermenu1button" value="Examples" style="right:5px; position:absolute;z-index:1">
             
             <input type="checkbox" id="reload_environment" name="reload_environment" value="Reload" checked>
-            <label for="reload_environment"> Reload environment on run</label>
+            <label for="reload_environment"> Reset Viewer On Run</label>
           </div>  
           
           <div id="editor" style="width: 100%;height:100%;position: absolute;top:24px"></div>
         
         </div>
 
-        <div id="htmleditorwindow" style="height:100%;">          
+        <div id="htmleditorwindow" style="height:100%;display:none">          
           <div id="htmleditor" style="width: 100%;height:100%;position: absolute;"></div>
         
         </div>        
-        <div id="csseditorwindow" style="height:100%;">          
+        <div id="csseditorwindow" style="height:100%;display:none">          
           <div id="csseditor" style="width: 100%;height:100%;position: absolute;"></div>
         
         </div>        
 
 
-      <div id="consolewindow" style="height:100%">
+      <div id="consolewindow" style="height:100%;display:none">
         <div id="preview-window" style="width:100%;height:100%; background-color: lightblue;"></div>
       </div>
     

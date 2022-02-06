@@ -112,43 +112,50 @@ async function startMonaco() {
   });
 }
 
-
 window.startMonaco = startMonaco;
 
-document.querySelector("#run-btn").addEventListener("click", async function () {
-  
-    $("#preview-window").empty();
-    let stingOpening = "async function runCode(){\r\n";
-    var editorValue = editor.getValue(); 
-    let stingClosing = "\r\n} runCode()"
-    let javascript = stingOpening.concat(editorValue, stingClosing);
-    
 
-    if (document.getElementById("reload_environment").checked == true){
-        await hwv.model.clear();
-        $("#userdiv").empty();
-    }        
 
-    $("#userdiv").append(htmleditor.getValue());
+async function runCode() {
 
-    $("<style type='text/css'>" + csseditor.getValue() + "</style>").appendTo("#userdiv");
+  $("#preview-window").empty();
+  let stingOpening = "async function runCode(){\r\n";
+  var editorValue = editor.getValue();
+  let stingClosing = "\r\n} runCode()"
+  let javascript = stingOpening.concat(editorValue, stingClosing);
 
-    var myFunc = new Function(`console.log("")`); //function called initially just to clear the window.
+
+  if (document.getElementById("reload_environment").checked == true) {
+    await hwv.model.clear();
+    $("#userdiv").empty();
+  }
+
+  $("#userdiv").append(htmleditor.getValue());
+
+  $("<style type='text/css'>" + csseditor.getValue() + "</style>").appendTo("#userdiv");
+
+  var myFunc = new Function(`console.log("")`); //function called initially just to clear the window.
+  myFunc();
+
+  try {
+    myFunc = new Function(javascript);
+    myFunc();
+  } catch (error) {
+    var errorString = error.toString()
+    const myError = `console.log( "${errorString}" )`;
+    myFunc = new Function(myError);
     myFunc();
 
-    try {
-        myFunc = new Function(javascript);
-        myFunc();
-      } catch (error) {
-        var errorString = error.toString()  
-        const myError = `console.log( "${errorString}" )`;
-        myFunc = new Function(myError); 
-        myFunc();
-        
-    }
-    let editorValues = {js:editor.getValue(), html:htmleditor.getValue(), css:csseditor.getValue()};
+  }
+  let editorValues = { js: editor.getValue(), html: htmleditor.getValue(), css: csseditor.getValue() };
 
-    localStorage.setItem("userCode", JSON.stringify(editorValues));
+  localStorage.setItem("userCode", JSON.stringify(editorValues));
+}
+
+window.runCode = runCode;
+
+document.querySelector("#run-btn").addEventListener("click", async function () {  
+  runCode();
 });
 
 (function () {

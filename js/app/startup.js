@@ -6,95 +6,142 @@ var hwvReady = false;
 async function startup()
 {
 
-    var config = {
-        settings: {
-            showPopoutIcon: false,
-            showMaximiseIcon: true,
-            showCloseIcon: false
-        },
-        content: [
-            {
-                type: 'row',
-                content: [
-                   
-                    {
-                        type: 'column',
-                        width: 40,
-                        content: [
-                            {
-                                type:'stack',
+    let config;
+    if (!getUrlParameter("fullscreen") || getUrlParameter("fullscreen") == "false")
+    {
+
+        config = {
+            settings: {
+                showPopoutIcon: false,
+                showMaximiseIcon: true,
+                showCloseIcon: false
+            },
+            content: [
+                {
+                    type: 'row',
+                    content: [
+
+                        {
+                            type: 'column',
+                            width: 40,
+                            content: [
+                                {
+                                    type: 'stack',
+                                    content: [{
+                                        type: 'component',
+                                        componentName: 'JS',
+                                        isClosable: false,
+                                        componentState: { label: 'C' }
+                                    }, {
+                                        type: 'component',
+                                        componentName: 'HTML',
+                                        isClosable: false,
+                                        componentState: { label: 'C' }
+                                    },
+                                    {
+                                        type: 'component',
+                                        componentName: 'CSS',
+                                        isClosable: false,
+                                        componentState: { label: 'C' }
+                                    }
+                                    ]
+                                },
+                                {
+                                    type: 'component',
+                                    componentName: 'Console',
+                                    isClosable: true,
+                                    height: 20,
+                                    componentState: { label: 'C' }
+                                }
+                            ]
+                        },
+                        {
+                            type: 'row',
+                            content: [{
+                                title: "HOOPS Communicator 2022 Viewer",
+                                type: 'component',
+                                componentName: 'Viewer',
+                                isClosable: false,
+                                width: 60,
+                                componentState: { label: 'A' }
+                            }],
+                        },
+                    ],
+                }]
+        };
+        myLayout = new GoldenLayout(config);
+        myLayout.registerComponent('Viewer', function (container, componentState) {
+            $(container.getElement()).append($("#content"));
+
+        });
+    
+        myLayout.registerComponent('JS', function (container, componentState) {
+            $("#editorwindow").css({ "display": "block" });
+            $(container.getElement()).append($("#editorwindow"));
+        });
+    
+        myLayout.registerComponent('HTML', function (container, componentState) {
+            $("#htmleditorwindow").css({ "display": "block" });
+            $(container.getElement()).append($("#htmleditorwindow"));
+        });
+    
+        myLayout.registerComponent('CSS', function (container, componentState) {
+            $("#csseditorwindow").css({ "display": "block" });
+            $(container.getElement()).append($("#csseditorwindow"));
+        });
+    
+    
+        myLayout.registerComponent('Console', function (container, componentState) {
+            $("#consolewindow").css({ "display": "block" });
+            $(container.getElement()).append($("#consolewindow"));
+        });
+    
+    }
+    else
+    {
+        config = {
+            settings: {
+                showPopoutIcon: false,
+                showMaximiseIcon: true,
+                showCloseIcon: false
+            },
+            content: [
+                {
+                    type: 'row',
+                    content: [             
+                        {
+                            type: 'row',
                             content: [{
                                 type: 'component',
-                                componentName: 'JS',
+                                componentName: 'Viewer',
                                 isClosable: false,
-                                componentState: { label: 'C' }
-                            },{
-                                type: 'component',
-                                componentName: 'HTML',
-                                isClosable: false,
-                                componentState: { label: 'C' }
-                            },
-                            {
-                                type: 'component',
-                                componentName: 'CSS',
-                                isClosable: false,
-                                componentState: { label: 'C' }
-                            }
-                        ]},
-                            {
-                                type: 'component',
-                                componentName: 'Console',
-                                isClosable: true,
-                                height: 20,
-                                componentState: { label: 'C' }
-                            }                          
-                        ]
-                    },
-                    {
-                        type: 'row',
-                        content: [{
-                            type: 'component',
-                            componentName: 'Viewer',
-                            isClosable: false,
-                            width: 60,
-                            componentState: { label: 'A' }
-                        }],
-                    },
-                ],
-            }]
-    };
+                                width: 60,
+                                componentState: { label: 'A' }
+                            }],
+                        },
+                    ],
+                }]
+        };
+
+            
+        myLayout = new GoldenLayout(config);
+        myLayout.registerComponent('Viewer', function (container, componentState) {
+            $(container.getElement()).append($("#content"));
+        });
+
+
+    }
 
 
 
-    myLayout = new GoldenLayout(config);
-    myLayout.registerComponent('Viewer', function (container, componentState) {
-        $(container.getElement()).append($("#content"));
-    });
-
-    myLayout.registerComponent('JS', function (container, componentState) {
-        $(container.getElement()).append($("#editorwindow"));
-    });
-
-    myLayout.registerComponent('HTML', function (container, componentState) {
-        $(container.getElement()).append($("#htmleditorwindow"));
-    });
-
-    myLayout.registerComponent('CSS', function (container, componentState) {
-        $(container.getElement()).append($("#csseditorwindow"));
-    });
-
-
-    myLayout.registerComponent('Console', function (container, componentState) {
-        $(container.getElement()).append($("#consolewindow"));
-    });
-
+  
     myLayout.on('stateChanged', function () {
         if (hwvReady) {
             hwv.resizeCanvas();
         }
         updateEditorLayout();
     });
-    myLayout.init();
+    await myLayout.init();
 
     var viewermenu = [{
         name: 'Getting Started Example',
@@ -102,7 +149,7 @@ async function startup()
             fetchExample('getting started');
 
         }
-    }, 
+    },
     {
         name: 'Change Part Color',
         fun: async function () {
@@ -136,6 +183,7 @@ async function startup()
         'containment': '#viewerContainer'
     });
 
+
     await startMonaco();   
 
 }
@@ -168,14 +216,6 @@ async function fetchExample(name) {
 }
 
 
-
-function clearEditor()
-{
-    editor.setValue("");
-    htmleditor.setValue("");
-    csseditor.setValue("");
-}
-
 function updateEditorLayout() {
     var newheight = $("#editorwindow").height() - $("#runbuttondiv").height() - 2;
     $("#editor").css({ "height": newheight + "px" });
@@ -186,4 +226,41 @@ function updateEditorLayout() {
 
     if (csseditor.layout)
         csseditor.layout();
+}
+
+
+
+function clearEditor()
+{
+    editor.setValue("");
+    htmleditor.setValue("");
+    csseditor.setValue("");
+}
+
+
+
+
+function getUrlParameter(sParam) {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+    return false;
+}
+
+
+function handleAutorun()
+{
+    if (getUrlParameter("autorun") && getUrlParameter("autorun") == "true")
+    {
+        runCode();
+    }
 }
