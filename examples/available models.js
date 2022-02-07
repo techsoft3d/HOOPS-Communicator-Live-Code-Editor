@@ -1,7 +1,6 @@
-//All the models listed below can be accessed in code snippets. 
+//All the models that are used in this example can be accessed directly in code snippets. 
 //If you want to access additional models and are running your own instance 
 //of the Code Editor you have to place those models into the "models" folder.
-
 
 function loadModel(modelname)
 {
