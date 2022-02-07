@@ -273,3 +273,25 @@ function handleAutorun()
         runCode();
     }
 }
+
+
+
+
+async function loadScript(url) {
+    return new Promise((resolve, reject) => {
+        $.getScript(url, async function () {
+            resolve();
+        });
+
+    });
+}
+
+
+async function loadCSS(url) {
+    return new Promise((resolve, reject) => {
+        $.get(url, function(css) {
+            $("<style>" + css + "</style>").appendTo("#userdiv");
+            resolve();
+        });
+    });
+}
