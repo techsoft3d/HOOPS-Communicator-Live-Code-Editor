@@ -69,7 +69,7 @@ async function startup()
                     ],
                 }]
         };
-        myLayout = new GoldenLayout(config);
+        myLayout = new GoldenLayout(config,$('#wrapperdiv'));
         myLayout.registerComponent('Viewer', function (container, componentState) {
             $(container.getElement()).append($("#content"));
 
@@ -102,8 +102,9 @@ async function startup()
         config = {
             settings: {
                 showPopoutIcon: false,
-                showMaximiseIcon: true,
-                showCloseIcon: false
+                showMaximiseIcon: false,
+                showCloseIcon: false,
+                hasHeaders: false,
             },
             content: [
                 {
@@ -125,7 +126,7 @@ async function startup()
         };
 
             
-        myLayout = new GoldenLayout(config);
+        myLayout = new GoldenLayout(config,$('#wrapperdiv'));
         myLayout.registerComponent('Viewer', function (container, componentState) {
             $(container.getElement()).append($("#content"));
         });
@@ -142,7 +143,7 @@ async function startup()
         }
         updateEditorLayout();
     });
-    await myLayout.init();
+    myLayout.init();
 
     var viewermenu = [{
         name: 'Getting Started Example',
@@ -184,6 +185,9 @@ async function startup()
         'containment': '#viewerContainer'
     });
 
+    $(window).resize(function () {
+        myLayout.updateSize($(window).width(), $(window).height()-35);
+        });
 
     await startMonaco();   
 
@@ -212,12 +216,13 @@ async function fetchExample(name) {
         text = await res.text();
         window.csseditor.setValue(text);    
     }
-
+    $("#xdiv").hide().show(0);
 
 }
 
 
 function updateEditorLayout() {
+ 
     var newheight = $("#editorwindow").height() - $("#runbuttondiv").height() - 2;
     $("#editor").css({ "height": newheight + "px" });
     if (editor.layout)
@@ -227,6 +232,9 @@ function updateEditorLayout() {
 
     if (csseditor.layout)
         csseditor.layout();
+
+
+   
 }
 
 

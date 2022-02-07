@@ -52,9 +52,32 @@
     <script type="text/javascript" src="js/contextMenu.min.js"></script>
     
     <script type="text/javascript" src="js/app/startup.js"></script>
+    <script type="text/javascript" src="js/app/server.js"></script>
+
 
     <script src="js/monaco-editor/min/vs/loader.js"></script>
     <script type="module" src="js/app/monaco_editor.js"></script>
+
+    <style>
+      #snippetsavedialog {
+        z-index: 1000;
+    background-color: lightgrey;
+    border-style: solid;
+    border-width: 1px;
+    width: 400px;
+    height: 290px;
+    padding-left:10px;
+    padding-top:5px;    
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    
+    margin: auto;
+    }
+    </style>
+
 
     <script type="text/javascript" id="viewerStartup">
       var hwv = null;
@@ -62,7 +85,7 @@
       var md = new MobileDetect(window.navigator.userAgent);
 
       window.onload = async function () {
-        await startup();
+        await startup();    
         Sample.createViewer().then(
           function (viewer) {
             hwv = viewer;
@@ -88,7 +111,7 @@
             ui = new Communicator.Ui.Desktop.DesktopUi(hwv, uiConfig);
 
                hwv.setCallbacks({
-                modelStructureReady: function() {hwvReady = true; handleAutorun()},
+                    modelStructureReady: function() {hwvReady = true; handleAutorun()},
                 });
 
             hwv.start();
@@ -107,8 +130,20 @@
     
   </head>
   <body>
-    <div id="content">
-      <span id="userdivwrapper" style="z-index:1;position:absolute;width:100%;height:100%;pointer-events: none;"> <span id="userdiv" style="z-index:1;position:initial;pointer-events: auto;"></span> </span>      
+    <div id="snippetsavedialog" style="display:none">
+      <strong>Title:</strong> <input type="text" id="snippettitle" style="width:95%" id="title" value=""></input><br>
+      <strong>Description:</strong><textarea id="snippetdescription" style="resize: none;width:95%;height:150px" type="text"></textarea><br>
+      <strong>Tags:</strong> <input id="snippettags" type="text" style="width:95%" id="title" value=""></input><br>
+      <button onclick="saveSnippet()" style="float:right;margin-right:10px;margin-top:10px" type="button";>Save</button>
+      <button onclick='$("#snippetsavedialog").css({ "display": "none" });' style="float:right;margin-right:10px;margin-top:10px" type="button";>Cancel</button>
+
+    </div>
+    <div id="xdiv" style="position:absolute;width:100%;height:100%;">
+      <div id="topbardiv" style="text-align:center;position:relative;width:100%;height:36px;background-color: lightblue;"><span><img style="margin-top:1px;height:35px" src="hc.svg" alt=""></span><span style="font-style: italic;color:white;font-size:33px;left:5px;top:-6px;position:relative;"> 3D Sandbox</span></div>
+      <div id="wrapperdiv" style="position:absolute;width:100%;height:calc(100% - 36px);top:36px">
+    <div id="content" style="position:absolute;width:100%;height:100%">
+
+      <span id="userdivwrapper" style="z-index:1;position:absolute;width:100%;height:100%;pointer-events: none;"><span id="userdiv" style="z-index:1;position:initial;pointer-events: auto;"></span> </span>      
       <div id="viewerContainer"></div>
    
 
@@ -1218,13 +1253,14 @@
         <div id="csseditorwindow" style="height:100%;display:none">          
           <div id="csseditor" style="width: 100%;height:100%;position: absolute;"></div>
         
-        </div>        
+        </div>    
 
-
-      <div id="consolewindow" style="height:100%;display:none">
+      <div id="consolewindow" style="height:100%; display:none">
         <div id="preview-window" style="width:100%;height:100%; background-color: lightblue;"></div>
       </div>
     
+    </div>
   </div>
+</div>
   </body>
 </html>

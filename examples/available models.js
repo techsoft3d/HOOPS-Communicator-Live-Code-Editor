@@ -10,24 +10,3 @@ function loadModel(modelname)
 
 }
 window.loadModel = loadModel;
-
-let button='<input type="button" value="microengine" onclick=\'loadModel("microengine")\'>';
-$("#userdiv").append(button);
-
-button='<input type="button" value="arboleda" onclick=\'loadModel("arboleda")\' >';
-$("#userdiv").append(button);
-
-button='<input type="button" value="bnc" onclick=\'loadModel("bnc")\' >';
-$("#userdiv").append(button);
-
-button='<input type="button" value="landinggear" onclick=\'loadModel("landinggear")\' >';
-$("#userdiv").append(button);
-
-button='<input type="button" value="MountainHome" onclick=\'loadModel("MountainHome")\' >';
-$("#userdiv").append(button);
-
-button='<input type="button" value="HotelFloorPlan" onclick=\'loadModel("HotelFloorPlan")\' >';
-$("#userdiv").append(button);
-
-button='<input type="button" value="EnginePoints" onclick=\'loadModel("EnginePoints")\' >';
-$("#userdiv").append(button);
