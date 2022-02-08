@@ -1,6 +1,7 @@
+/* Click the 'Run' button to execute the code below */
+
 console.log("Hello world!");
 
-/* Uncomment the code below and click the 'Run' button above */
-// let rootNode = hwv.model.getAbsoluteRootNode();
-// let modelPath = 'models/microengine.scs';
-// hwv.model.loadSubtreeFromScsFile(rootNode, modelPath);
+let rootNode = hwv.model.getAbsoluteRootNode();
+let modelPath = 'models/microengine.scs';
+await hwv.model.loadSubtreeFromScsFile(rootNode, modelPath);

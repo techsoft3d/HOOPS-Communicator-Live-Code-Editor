@@ -57,15 +57,10 @@ async function startMonaco() {
     editor.addAction({
       // An unique identifier of the contributed action.
       id: 'addSelectionArrayMonacoAction',
-
       // A label of the action that will be presented to the user.
       label: 'Insert Selection Array',
-
-
       contextMenuGroupId: 'customGroup',
-
       contextMenuOrder: 0,
-
       // Method that will be executed when the action is triggered.
       // @param editor The editor instance is passed in as a convenience
       run: function (ed) {
@@ -87,26 +82,42 @@ async function startMonaco() {
     editor.addAction({
       // An unique identifier of the contributed action.
       id: 'setCameraMonacoAction',
-
       // A label of the action that will be presented to the user.
       label: 'Set Camera',
-
-
       contextMenuGroupId: 'customGroup',
-
       contextMenuOrder: 0,
-
       // Method that will be executed when the action is triggered.
       // @param editor The editor instance is passed in as a convenience
       run: function (ed) {
         var cam = hwv.view.getCamera();
-
         let text = 'let cam = Communicator.Camera.fromJson(JSON.parse(\'' + JSON.stringify(cam.toJson()) + '\'));\n';      
         text += "hwv.view.setCamera(cam);";
         insertTextIntoEditor(text);
 
       }
     });
+
+
+    editor.addAction({
+      // An unique identifier of the contributed action.
+      id: 'setMatrixMonacoAction',
+      // A label of the action that will be presented to the user.
+      label: 'Set Matrix from Selection',
+      contextMenuGroupId: 'customGroup',
+      contextMenuOrder: 0,
+      // Method that will be executed when the action is triggered.
+      // @param editor The editor instance is passed in as a convenience
+      run: function (ed) {
+        var nodeid = hwv.selectionManager.getLast().getNodeId();
+        let mat = hwv.model.getNodeMatrix(nodeid);
+
+        let text = 'let mat = Communicator.Matrix.fromJson(JSON.parse(\'' + JSON.stringify(mat.toJson()) + '\'));\n';      
+        text += 'hwv.model.setNodeMatrix(' + nodeid + ',mat);';
+        insertTextIntoEditor(text);
+
+      }
+    });
+    
     resolve();
   });
   });
