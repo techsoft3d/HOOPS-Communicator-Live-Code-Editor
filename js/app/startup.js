@@ -159,6 +159,12 @@ async function startup()
         }
     },
     {
+        name: 'Create Mesh',
+        fun: async function () {
+            fetchExample('create mesh');
+        }
+    },
+    {
         name: 'Add Custom UI Button',
         fun: async function () {
             fetchExample('add custom ui button');
