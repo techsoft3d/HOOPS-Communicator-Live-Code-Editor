@@ -9,6 +9,7 @@ async function startup()
     let config;
     if (!getUrlParameter("fullscreen") || getUrlParameter("fullscreen") == "false")
     {
+        $("#uibuttons").css("display","block");
 
         config = {
             settings: {

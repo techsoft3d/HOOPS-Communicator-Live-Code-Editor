@@ -122,8 +122,10 @@
   </head>
   <body>
     <div id="xdiv" style="position:absolute;width:100%;height:100%;">
-      <box-icon class="uibuttons" onclick="runCode()" size="md" name='play-circle' color='#ffffff' ></box-icon>
-      <box-icon class="uibuttons" onclick="clearEditor()" size="md" style="left:40px" name='x-circle' color='#ffffff' ></box-icon>
+      <div id="uibuttons" style="display:none">
+        <box-icon class="uibuttons" onclick="runCode()" size="md" name='play-circle' color='#ffffff' ></box-icon>
+        <box-icon class="uibuttons" onclick="clearEditor()" size="md" style="left:40px" name='x-circle' color='#ffffff' ></box-icon>
+      </div>
 
       <div id="topbardiv" style="text-align:center;position:relative;width:100%;height:38px;background-color: lightblue;"><span><img style="margin-top:1px;height:35px" src="hc.svg" alt=""></span><span style="font-style: italic;color:white;font-size:33px;left:5px;top:-6px;position:relative;"> 3D Sandbox</span></div>
       <div id="wrapperdiv" style="position:absolute;width:100%;height:calc(100% - 38px);top:38px">
