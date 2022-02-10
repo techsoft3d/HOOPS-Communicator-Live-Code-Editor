@@ -53,28 +53,20 @@
     
     <script type="text/javascript" src="js/app/startup.js"></script>
     
+    <script src="https://unpkg.com/boxicons@2.1.1/dist/boxicons.js"></script>
+
 
     <script src="js/monaco-editor/min/vs/loader.js"></script>
     <script type="module" src="js/app/monaco_editor.js"></script>
-
     <style>
-      #snippetsavedialog {
-        z-index: 1000;
-    background-color: lightgrey;
-    border-style: solid;
-    border-width: 1px;
-    width: 400px;
-    height: 290px;
-    padding-left:10px;
-    padding-top:5px;    
-    position: absolute;
-    top:0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    
-    margin: auto;
-    }
+      .uibuttons {
+        background-image: linear-gradient(to bottom right, #b8a1a1, lightblue);
+        border-radius: 10px;
+        padding: 2px;
+        top: 1px;
+        position: absolute;
+        z-index: 1000
+      }
     </style>
 
 
@@ -129,17 +121,12 @@
     
   </head>
   <body>
-    <div id="snippetsavedialog" style="display:none">
-      <strong>Title:</strong> <input type="text" id="snippettitle" style="width:95%" id="title" value=""></input><br>
-      <strong>Description:</strong><textarea id="snippetdescription" style="resize: none;width:95%;height:150px" type="text"></textarea><br>
-      <strong>Tags:</strong> <input id="snippettags" type="text" style="width:95%" id="title" value=""></input><br>
-      <button onclick="saveSnippet()" style="float:right;margin-right:10px;margin-top:10px" type="button";>Save</button>
-      <button onclick='$("#snippetsavedialog").css({ "display": "none" });' style="float:right;margin-right:10px;margin-top:10px" type="button";>Cancel</button>
-
-    </div>
     <div id="xdiv" style="position:absolute;width:100%;height:100%;">
-      <div id="topbardiv" style="text-align:center;position:relative;width:100%;height:36px;background-color: lightblue;"><span><img style="margin-top:1px;height:35px" src="hc.svg" alt=""></span><span style="font-style: italic;color:white;font-size:33px;left:5px;top:-6px;position:relative;"> 3D Sandbox</span></div>
-      <div id="wrapperdiv" style="position:absolute;width:100%;height:calc(100% - 36px);top:36px">
+      <box-icon class="uibuttons" onclick="runCode()" size="md" name='play-circle' color='#ffffff' ></box-icon>
+      <box-icon class="uibuttons" onclick="clearEditor()" size="md" style="left:40px" name='x-circle' color='#ffffff' ></box-icon>
+
+      <div id="topbardiv" style="text-align:center;position:relative;width:100%;height:38px;background-color: lightblue;"><span><img style="margin-top:1px;height:35px" src="hc.svg" alt=""></span><span style="font-style: italic;color:white;font-size:33px;left:5px;top:-6px;position:relative;"> 3D Sandbox</span></div>
+      <div id="wrapperdiv" style="position:absolute;width:100%;height:calc(100% - 38px);top:38px">
     <div id="content" style="position:absolute;width:100%;height:100%">
 
       <span id="userdivwrapper" style="z-index:1;position:absolute;width:100%;height:100%;pointer-events: none;"><span id="userdiv" style="z-index:1;position:initial;pointer-events: auto;"></span> </span>      
@@ -1233,10 +1220,7 @@
 
         <div id="editorwindow" style="height:100%;display:none">
           <div id="runbuttondiv" style="height:24px;width:100%;position:absolute">
-            <button id="run-btn" type="button";>Run</button>
-            <button onclick="clearEditor()" id="save" type="button";>Clear</button>
-            <input type="button" id="viewermenu1button" value="Examples" style="right:5px; position:absolute;z-index:1">
-            
+            <input type="button" id="viewermenu1button" value="Examples" style="right:5px; position:absolute;z-index:1">            
             <input type="checkbox" id="reload_environment" name="reload_environment" value="Reload" checked>
             <label for="reload_environment"> Reset Viewer On Run</label>
           </div>  
