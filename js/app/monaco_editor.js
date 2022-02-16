@@ -165,9 +165,6 @@ async function runCode() {
 
 window.runCode = runCode;
 
-document.querySelector("#run-btn").addEventListener("click", async function () {  
-  runCode();
-});
 
 (function () {
   var oldLog = console.log;
